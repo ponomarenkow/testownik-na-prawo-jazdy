@@ -1,4 +1,4 @@
-#Testownik na prawo jazdy
+# Testownik na prawo jazdy
 *English below!* 
 *Deutsch weiter unten!*
 *Українська нижче!*
@@ -8,9 +8,9 @@ Program wspomagający naukę do teoretycznego egzaminu na prawo jazdy z oficjaln
 > [!NOTE]
 > Program wymaga pobrania multimediów do pytań, które na obecny moment zajmują ponad 9 GB pamięci.
 
--#GenAI disclaimer: przy tworzeniu programu konsultowano modele genAI przy rozwiązywaniu błędów, przy których wyszukiwanie w internecie zawiodło. Wygenerowane fragmenty kodu są nie większe, niż te brane z tutoriali lub odpowiedzi na forach. GenAI zostało użyte także do tłumaczeń na ukraiński i niemiecki.
+-# GenAI disclaimer: przy tworzeniu programu konsultowano modele genAI przy rozwiązywaniu błędów, przy których wyszukiwanie w internecie zawiodło. Wygenerowane fragmenty kodu są nie większe, niż te brane z tutoriali lub odpowiedzi na forach. GenAI zostało użyte także do tłumaczeń na ukraiński i niemiecki.
 
-##Instalacja
+## Instalacja
 Najpierw zainstaluj pythona i wymagane moduły, jeśli ich nie posiadasz. Program był tworzony na wersjach podanych w nawiasach, ale może być kompatybilny z innymi.
 - Python (3.14.3)
 - PySide6 (6.11.1)
@@ -18,18 +18,18 @@ Najpierw zainstaluj pythona i wymagane moduły, jeśli ich nie posiadasz. Progra
 
 Sklonuj lub pobierz repozytorium. Ze [strony Ministerstwa Infrastruktury](https://www.gov.pl/web/infrastruktura/prawo-jazdy) pobierz aktualną bazę pytań, zmień nazwę pliku na `baza_pytan.xlsx` i umieść go w folderze `pytania`. Następnie pobierz wszystkie multimedia do pytań, rozpakuj je i umieść bezpośrednio w `multimedia/do_pytan`. Program możesz uruchomić z terminala, a na Windowsie także poprzez plik `run.bat` (jeśli nie działa, spróbuj zmienić komendę z `python` na `python3`). 
 
-##Jak to działa
+## Jak to działa
 Zasada jest bardzo prosta. W losowej kolejności wyświetlają ci się pytania dla twojej kategorii prawa jazdy, a po udzieleniu przez ciebie odpowiedzi pokazywana jest prawidłowa. Początkowo każde pytanie ma się pojawić dwa razy, ale jeśli odpowiesz źle, zostaną dodane kolejne dwa powtórzenia, żeby to pytanie lepiej ci się utrwaliło. I tak odpowiadasz, aż opanujesz wszystkie pytania. Czy to skuteczne? Powiem tyle, uczyłam się głównie z tego i zdałam za pierwszym razem ;)
 
-##Testownik for Polish driver's license
+## Testownik for Polish driver's license
 A program for learning theory for Polish driver's license exam, using the official question base from the Ministry. It's form is inspired by [PWr's Testownik](https://github.com/TestownikiPWR/testownik-electron). It allows to master all available questions for any driver's license category.
 
 > [!NOTE]
 > For the program to work, it's necessary to download multimedia for questions, which as of now take up more than 9 GB of memory.
 
--#GenAI disclaimer: while making the program, genAI models were consulted in solving errors that internet search did not help with. Generated code fragments are no larger than the ones taken from tutorials or answers on forums. GenAI was also used for translations to Ukrainian and German.
+-# GenAI disclaimer: while making the program, genAI models were consulted in solving errors that internet search did not help with. Generated code fragments are no larger than the ones taken from tutorials or answers on forums. GenAI was also used for translations to Ukrainian and German.
 
-###How to install
+### How to install
 First install python and necessary modules, unless you already have them. The program was created with versions in brackets, but it may be compatible with others.
 - Python (3.14.3)
 - PySide6 (6.11.1)
@@ -37,7 +37,7 @@ First install python and necessary modules, unless you already have them. The pr
 
 Clone or download the repository. From [Ministry's of Infrastructure site](https://www.gov.pl/web/infrastruktura/prawo-jazdy) download the question base, rename the file to `baza_pytan.xlsx` and place it in the folder `pytania`. Next download all multimedia for questions, unpack them and place directly in `multimedia/do_pytan`. You may run the program from console, and on Windows also through `run.bat` (if it doesn't work, try changing the command from `python` to `python3`).
 
-###How does it work
+### How does it work
 The rule is simple. THe questions from your category are shown to you in random order, and after answering the correct answer is shown. Initially every question is supposed to appear two times, but if you answer incorrectly, two additional repeats are added to help you remember this question better. And you go on until you learn all the questions. Is it effective? I'll say this, I was learning mainly from this and I passed on the first try ;)
 
 ## Testownik für den Führerschein in Polen
@@ -48,7 +48,7 @@ Ein Programm zum Lernen der Theorie für die polnische Führerscheinprüfung, da
 > [!NOTE]
 > Damit das Programm funktioniert, müssen die Multimediadateien für die Fragen heruntergeladen werden. Diese benötigen derzeit mehr als 9 GB Speicherplatz.
 
--#GenAI-Hinweis: Bei der Entwicklung des Programms wurden GenAI-Modelle zur Lösung von Fehlern konsultiert, bei denen eine Internetsuche nicht weitergeholfen hat. Die generierten Codefragmente sind nicht größer als diejenigen, die aus Tutorials oder Antworten in Foren übernommen wurden. GenAI wurde außerdem für die Übersetzungen ins Ukrainische und Deutsche verwendet.
+-# GenAI-Hinweis: Bei der Entwicklung des Programms wurden GenAI-Modelle zur Lösung von Fehlern konsultiert, bei denen eine Internetsuche nicht weitergeholfen hat. Die generierten Codefragmente sind nicht größer als diejenigen, die aus Tutorials oder Antworten in Foren übernommen wurden. GenAI wurde außerdem für die Übersetzungen ins Ukrainische und Deutsche verwendet.
 
 ### Installation
 Installiere zunächst Python und die benötigten Module, sofern du sie nicht bereits hast. Das Programm wurde mit den in Klammern angegebenen Versionen erstellt, ist aber möglicherweise auch mit anderen Versionen kompatibel.
@@ -69,7 +69,7 @@ Die Regel ist einfach. Die Fragen aus deiner Führerscheinklasse werden dir in z
 > [!NOTE]
 > Для роботи програми необхідно завантажити мультимедійні матеріали для питань, які наразі займають понад 9 ГБ пам'яті.
 
--#Примітка щодо GenAI: під час створення програми моделі GenAI використовувалися для пошуку рішень помилок, які не вдалося вирішити за допомогою пошуку в інтернеті. Згенеровані фрагменти коду не більші за фрагменти, взяті з навчальних посібників або відповідей на форумах. GenAI також використовувався для перекладу українською та німецькою мовами.
+-# Примітка щодо GenAI: під час створення програми моделі GenAI використовувалися для пошуку рішень помилок, які не вдалося вирішити за допомогою пошуку в інтернеті. Згенеровані фрагменти коду не більші за фрагменти, взяті з навчальних посібників або відповідей на форумах. GenAI також використовувався для перекладу українською та німецькою мовами.
 
 ### Як встановити
 Спочатку встановіть Python та необхідні модулі, якщо вони ще не встановлені. Програма створювалася з використанням версій, зазначених у дужках, але може бути сумісною і з іншими версіями.
