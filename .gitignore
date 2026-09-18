@@ -1,6 +1,9 @@
 saves/*
+!saves/settings.json
 pytania/*
+!pytania/.empty
 multimedia/do_pytan/*
+!multimedia/do_pytan/.empty
 multimedia/PJM
 
 __pycache__
