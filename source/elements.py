@@ -415,8 +415,12 @@ class SettingsScreen(QDialog):
         self.font_error = QLabel(get_string("numeric error"))
         self.font_error.setPalette(red_font)
 
+        self.save = QHBoxLayout()
         self.save_button = QPushButton(get_string("save"))
         self.save_button.clicked.connect(self.save_settings)
+        self.save.addStretch(1)
+        self.save.addWidget(self.save_button)
+        self.save.addStretch(1)
 
         # font = self.save_button.font()
         # font.setPointSize(settings.font_size)
@@ -427,7 +431,7 @@ class SettingsScreen(QDialog):
         self.layout.addRow(get_string("initial repeats"), self.init_input)
         self.layout.addRow(get_string("added repeats"), self.added_input)
         self.layout.addRow(get_string("font"), self.font_input)
-        self.layout.addRow(self.save_button)
+        self.layout.addRow(self.save)
         self.setLayout(self.layout)
 
 
