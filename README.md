@@ -10,6 +10,8 @@ Program wspomagający naukę do teoretycznego egzaminu na prawo jazdy z oficjaln
 > [!NOTE]
 > Program wymaga pobrania multimediów do pytań, które na obecny moment zajmują ponad 9 GB pamięci.
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9d4eb923-aaaa-49e5-840b-3d820988c635" />
+
 <sub> GenAI disclaimer: przy tworzeniu programu konsultowano modele genAI przy rozwiązywaniu błędów, przy których wyszukiwanie w internecie zawiodło. Wygenerowane fragmenty kodu są nie większe, niż te brane z tutoriali lub odpowiedzi na forach. GenAI zostało użyte także do tłumaczeń na ukraiński i niemiecki. </sub>
 
 ## Instalacja
