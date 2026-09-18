@@ -1,6 +1,8 @@
 # Testownik na prawo jazdy
 *English below!* 
+
 *Deutsch weiter unten!*
+
 *Українська нижче!*
 
 Program wspomagający naukę do teoretycznego egzaminu na prawo jazdy z oficjalnej bazy Ministerstwa w formie inspirowanej [Testownikiem PWr](https://github.com/TestownikiPWR/testownik-electron). Pozwala opanować wszystkie dostępne pytania dla dowolnej kategorii prawa jazdy. 
@@ -8,7 +10,7 @@ Program wspomagający naukę do teoretycznego egzaminu na prawo jazdy z oficjaln
 > [!NOTE]
 > Program wymaga pobrania multimediów do pytań, które na obecny moment zajmują ponad 9 GB pamięci.
 
--# GenAI disclaimer: przy tworzeniu programu konsultowano modele genAI przy rozwiązywaniu błędów, przy których wyszukiwanie w internecie zawiodło. Wygenerowane fragmenty kodu są nie większe, niż te brane z tutoriali lub odpowiedzi na forach. GenAI zostało użyte także do tłumaczeń na ukraiński i niemiecki.
+<sub> GenAI disclaimer: przy tworzeniu programu konsultowano modele genAI przy rozwiązywaniu błędów, przy których wyszukiwanie w internecie zawiodło. Wygenerowane fragmenty kodu są nie większe, niż te brane z tutoriali lub odpowiedzi na forach. GenAI zostało użyte także do tłumaczeń na ukraiński i niemiecki. </sub>
 
 ## Instalacja
 Najpierw zainstaluj pythona i wymagane moduły, jeśli ich nie posiadasz. Program był tworzony na wersjach podanych w nawiasach, ale może być kompatybilny z innymi.
@@ -27,7 +29,7 @@ A program for learning theory for Polish driver's license exam, using the offici
 > [!NOTE]
 > For the program to work, it's necessary to download multimedia for questions, which as of now take up more than 9 GB of memory.
 
--# GenAI disclaimer: while making the program, genAI models were consulted in solving errors that internet search did not help with. Generated code fragments are no larger than the ones taken from tutorials or answers on forums. GenAI was also used for translations to Ukrainian and German.
+<sub> GenAI disclaimer: while making the program, genAI models were consulted in solving errors that internet search did not help with. Generated code fragments are no larger than the ones taken from tutorials or answers on forums. GenAI was also used for translations to Ukrainian and German. </sub>
 
 ### How to install
 First install python and necessary modules, unless you already have them. The program was created with versions in brackets, but it may be compatible with others.
@@ -48,7 +50,7 @@ Ein Programm zum Lernen der Theorie für die polnische Führerscheinprüfung, da
 > [!NOTE]
 > Damit das Programm funktioniert, müssen die Multimediadateien für die Fragen heruntergeladen werden. Diese benötigen derzeit mehr als 9 GB Speicherplatz.
 
--# GenAI-Hinweis: Bei der Entwicklung des Programms wurden GenAI-Modelle zur Lösung von Fehlern konsultiert, bei denen eine Internetsuche nicht weitergeholfen hat. Die generierten Codefragmente sind nicht größer als diejenigen, die aus Tutorials oder Antworten in Foren übernommen wurden. GenAI wurde außerdem für die Übersetzungen ins Ukrainische und Deutsche verwendet.
+<sub> GenAI-Hinweis: Bei der Entwicklung des Programms wurden GenAI-Modelle zur Lösung von Fehlern konsultiert, bei denen eine Internetsuche nicht weitergeholfen hat. Die generierten Codefragmente sind nicht größer als diejenigen, die aus Tutorials oder Antworten in Foren übernommen wurden. GenAI wurde außerdem für die Übersetzungen ins Ukrainische und Deutsche verwendet. </sub>
 
 ### Installation
 Installiere zunächst Python und die benötigten Module, sofern du sie nicht bereits hast. Das Programm wurde mit den in Klammern angegebenen Versionen erstellt, ist aber möglicherweise auch mit anderen Versionen kompatibel.
@@ -69,7 +71,7 @@ Die Regel ist einfach. Die Fragen aus deiner Führerscheinklasse werden dir in z
 > [!NOTE]
 > Для роботи програми необхідно завантажити мультимедійні матеріали для питань, які наразі займають понад 9 ГБ пам'яті.
 
--# Примітка щодо GenAI: під час створення програми моделі GenAI використовувалися для пошуку рішень помилок, які не вдалося вирішити за допомогою пошуку в інтернеті. Згенеровані фрагменти коду не більші за фрагменти, взяті з навчальних посібників або відповідей на форумах. GenAI також використовувався для перекладу українською та німецькою мовами.
+<sub> Примітка щодо GenAI: під час створення програми моделі GenAI використовувалися для пошуку рішень помилок, які не вдалося вирішити за допомогою пошуку в інтернеті. Згенеровані фрагменти коду не більші за фрагменти, взяті з навчальних посібників або відповідей на форумах. GenAI також використовувався для перекладу українською та німецькою мовами. </sub>
 
 ### Як встановити
 Спочатку встановіть Python та необхідні модулі, якщо вони ще не встановлені. Програма створювалася з використанням версій, зазначених у дужках, але може бути сумісною і з іншими версіями.
