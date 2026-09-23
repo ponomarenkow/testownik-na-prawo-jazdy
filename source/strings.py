@@ -28,7 +28,8 @@ strings = {
         "numeric error": "Wartość musi być liczbą naturalną.",
         "font": "Rozmiar czcionki: ",
         "initial repeats": "Liczba początkowych powtórzeń: ",
-        "added repeats": "Liczba powtórzeń dodawanych po błędzie: "
+        "added repeats": "Liczba powtórzeń dodawanych po błędzie: ",
+        "restart": "Powtórz najtrudniejsze"
     },
     "EN": {
         "title": "Testownik for driver's license",
@@ -58,7 +59,8 @@ strings = {
         "numeric error": "The value must be a natural number.",
         "font": "Font size: ",
         "initial repeats": "Number of initial repeats: ",
-        "added repeats": "Number of repeats added after a mistake: "
+        "added repeats": "Number of repeats added after a mistake: ",
+        "restart": "Repeat difficult ones"
     },
     "D": {
         "title": "Testownik für den Führerschein",
@@ -87,7 +89,8 @@ strings = {
         "numeric error": "Der Wert muss eine natürliche Zahl sein.",
         "font": "Schriftgröße: ",
         "initial repeats": "Anzahl der anfänglichen Wiederholungen: ",
-        "added repeats": "Anzahl der nach einem Fehler hinzugefügten Wiederholungen: "
+        "added repeats": "Anzahl der nach einem Fehler hinzugefügten Wiederholungen: ",
+        "restart": "Schwierige wiederholen"
     },
     "UA": {
         "title": "Testownik для водійських прав",
@@ -116,7 +119,8 @@ strings = {
         "numeric error": "Значення має бути натуральним числом.",
         "font": "Розмір шрифту: ",
         "initial repeats": "Кількість початкових повторень: ",
-        "added repeats": "Кількість повторень, доданих після помилки: "
+        "added repeats": "Кількість повторень, доданих після помилки: ",
+        "restart": "Повторити складні"
     }
 }
 

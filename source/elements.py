@@ -8,7 +8,7 @@ from random import randint
 import re
 import settings
 from strings import get_string
-from loading import load_save, save_exists, filter_out
+from loading import load_save, save_exists, filter_out, new_from_diff
 
 class QuestionPage(QMainWindow):
 
@@ -20,9 +20,8 @@ class QuestionPage(QMainWindow):
         settings.load()
         new_save = not save_exists()
 
-        questions, save = load_save()
-        self.questions = questions
-        self.save = save
+        self.questions, self.save, self.diff_quest = load_save()
+        self.initial_number = len(self.questions)
 
         self.settings = SettingsScreen(parent=self)
 
@@ -59,7 +58,7 @@ class QuestionPage(QMainWindow):
         self.points.setFont(font)
         self.repeats = QLabel(get_string("repeats") + "-")
         self.repeats.setFont(font)
-        self.learned = QLabel(get_string("learned") + str(len(self.questions) - len(self.save)) + "/" + str(len(self.questions)))
+        self.learned = QLabel(get_string("learned") + str(self.initial_number - len(self.save)) + "/" + str(self.initial_number))
         self.learned.setFont(font)
 
         self.media = QLabel("")
@@ -107,16 +106,27 @@ class QuestionPage(QMainWindow):
         self.next_button.setFont(QFont(font))
         self.next_button.clicked.connect(self.show_question)
 
-        self.settings_button = QPushButton(get_string("settings"))
-        self.settings_button.setFont(QFont(font))
-        self.settings_button.clicked.connect(self.settings.show)
-
         self.next = QWidget()
         self.next_layout = QHBoxLayout()
         self.next_layout.addStretch(1)
         self.next_layout.addWidget(self.next_button)
         self.next_layout.addStretch(1)
         self.next.setLayout(self.next_layout)
+
+        self.restart_button = QPushButton(get_string("restart"))
+        self.restart_button.setFont(QFont(font))
+        self.restart_button.clicked.connect(self.restart)
+
+        self.restart_widget = QWidget()
+        self.restart_layout = QHBoxLayout()
+        self.restart_layout.addStretch(1)
+        self.restart_layout.addWidget(self.restart_button)
+        self.restart_layout.addStretch(1)
+        self.restart_widget.setLayout(self.restart_layout)
+
+        self.settings_button = QPushButton(get_string("settings"))
+        self.settings_button.setFont(QFont(font))
+        self.settings_button.clicked.connect(self.settings.show)
         
         self.settings_layout = QHBoxLayout()
         self.settings_layout.addWidget(self.settings_button)
@@ -202,7 +212,7 @@ class QuestionPage(QMainWindow):
         self.next_button.setText(get_string("next"))
         self.settings_button.setText(get_string("settings"))
         self.set_question()
-        self.learned.setText(get_string("learned") + str(len(self.questions) - len(self.save)) + "/" + str(len(self.questions)))
+        self.update_learned()
         if not pd.isnull(self.current_question["Odpowiedź A"]):
             self.answer_a.setText("A. " + self.current_question["Odpowiedź A" + settings.lang_tag])
             self.answer_b.setText("B. " + self.current_question["Odpowiedź B" + settings.lang_tag])
@@ -231,6 +241,7 @@ class QuestionPage(QMainWindow):
         self.yes_button.setFont(font)
         self.no_button.setFont(font)
         self.next_button.setFont(font)
+        self.restart_button.setFont(font)
         self.settings_button.setFont(font)
         self.learned.setFont(font)
         self.question_nr.setFont(font)
@@ -272,6 +283,8 @@ class QuestionPage(QMainWindow):
             self.movie.start()
             settings.first_run = True
             settings.save()
+            if len(self.diff_quest) > 0:
+                self.question_layout.addWidget(self.restart_widget)
             return
         
         self.current = randint(0, len(self.save) - 1)
@@ -303,7 +316,10 @@ class QuestionPage(QMainWindow):
                     self.play_widget.setParent(None)
                     self.play_widget.hide()  
                     pixmap = QPixmap("multimedia/do_pytan/" + self.current_question["Media"])
-                    pixmap = pixmap.scaledToWidth(settings.media_width)
+                    if pixmap.width() > pixmap.height() + 10:
+                        pixmap = pixmap.scaledToWidth(settings.media_width)
+                    else:
+                        pixmap = pixmap.scaledToHeight(settings.max_media_height)
                     self.media.setPixmap(pixmap)
                 else:
                     self.media.clear()
@@ -323,6 +339,19 @@ class QuestionPage(QMainWindow):
             self.video_container.removeWidget(self.play_widget)  
             self.play_widget.setParent(None)
 
+    def update_learned(self):
+        self.learned.setText(get_string("learned") + str(self.initial_number - len(self.save)) + "/" + str(self.initial_number))
+
+    @Slot()
+    def restart(self):
+        self.save = new_from_diff(self.diff_quest)
+        self.question_layout.removeWidget(self.restart_widget)
+        self.restart_widget.setParent(None)
+        self.diff_quest = pd.DataFrame({"Lp": []})
+        self.diff_quest.to_csv(settings.diff_path, index=False)
+        self.initial_number = len(self.save)
+        self.update_learned()
+        self.show_question()
 
 
     @Slot()
@@ -346,11 +375,13 @@ class QuestionPage(QMainWindow):
         if answer == self.correct:
             if self.save.iloc[self.current, self.save.columns.get_loc("Repeats")] == 0:
                 self.save.drop(self.save.index[self.current], inplace=True)
-                self.learned.setText(get_string("learned") + str(len(self.questions) - len(self.save)) + "/" + str(len(self.questions)))
+                self.update_learned()
         else:
             self.save.iloc[self.current, self.save.columns.get_loc("Repeats")] += settings.added_repeats
             self.buttons[answer].setStyleSheet('QPushButton {background-color: red;}')
             self.repeats.setText(get_string("repeats") + str(self.save.iloc[self.current, self.save.columns.get_loc("Repeats")]))
+            self.diff_quest.loc[len(self.diff_quest)] = self.chosen["Lp"]
+            self.diff_quest.to_csv(settings.diff_path, index=False)
         
         self.buttons[self.correct].setStyleSheet('QPushButton {background-color: green;}')
         self.question_layout.addWidget(self.next)
@@ -503,9 +534,9 @@ class SettingsScreen(QDialog):
             self.parent.update_language()
         if settings.category != self.category_input.text():
             settings.category = self.category_input.text()
-            questions, save = load_save(force_new=True)
-            self.parent.questions = questions
-            self.parent.save = save
+            self.parent.questions, self.parent.save, self.parent.diff_quest = load_save(force_new=True)
+            self.parent.initial_number = len(self.parent.questions)
+            self.parent.update_learned()
             self.parent.show_question()
         settings.initial_repeats = int(self.init_input.text())
         settings.added_repeats = int(self.added_input.text())

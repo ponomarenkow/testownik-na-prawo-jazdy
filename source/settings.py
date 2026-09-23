@@ -4,6 +4,7 @@ category = "B"
 lang = "PL"
 lang_tag = ""
 save_path = "saves/save.csv"
+diff_path = "saves/difficult.csv"
 first_run = True
 initial_repeats = 2
 added_repeats = 2

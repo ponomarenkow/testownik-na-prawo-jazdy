@@ -18,6 +18,7 @@ def save_exists():
 def load_save(force_new=False):
     save = pd.DataFrame({"Lp": []})
     questions = filter_out(settings.category)
+    diff_quest = pd.DataFrame({"Lp": []})
     try:
         save = pd.read_csv(settings.save_path)
     except pd.errors.EmptyDataError, FileNotFoundError:
@@ -25,9 +26,15 @@ def load_save(force_new=False):
     except Exception:
         print(traceback.format_exc())
         print(strings[settings.lang]["save error"])
+    try:
+        diff_quest = pd.read_csv(settings.diff_path)
+    except pd.errors.EmptyDataError, FileNotFoundError:
+        diff_quest.to_csv(settings.diff_path, index=False)
     if len(save) == 0 or force_new:
         save = new_save(questions)
-    return questions, save
+    if force_new:
+        diff_quest = pd.DataFrame({"Lp": []})
+    return questions, save, diff_quest
 
 def new_save(questions):
     save = pd.DataFrame({"Lp": []})
@@ -36,6 +43,15 @@ def new_save(questions):
     save.to_csv(settings.save_path, index=False)
     return save
 
+# creates new save from the list of the difficult questions (the ones where user made any errors when answering)
+def new_from_diff(diff_quest):
+    save = pd.DataFrame({"Lp": []})
+    save["Lp"] = diff_quest.loc[:, "Lp"]
+    save["Repeats"] = settings.initial_repeats
+    save.to_csv(settings.save_path, index=False)
+    return save
+
+# returns only the questions matching selected driving license category
 def filter_out(category: str):
     try:
         data = pd.read_excel("pytania/baza_pytan.xlsx")
