@@ -4,7 +4,8 @@ pytania/*
 !pytania/.empty
 multimedia/do_pytan/*
 !multimedia/do_pytan/.empty
-multimedia/PJM
+multimedia/PJM/*
+!multimedia/PJM/.empty
 
 __pycache__
 source/__pycache__

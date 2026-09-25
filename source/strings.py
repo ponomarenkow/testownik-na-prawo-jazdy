@@ -126,6 +126,8 @@ strings = {
 
 def get_string(string: str):
     try:
+        if settings.lang == "PJM":
+            return strings["PL"][string]    
         return strings[settings.lang][string]
     except:
         try:

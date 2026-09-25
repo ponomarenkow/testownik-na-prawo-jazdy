@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QMainWindow, QDialog, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel, QPushButton, QWidget, QScrollArea, QFrame, QLineEdit
 from PySide6.QtMultimedia import QMediaPlayer
 from PySide6.QtMultimediaWidgets import QVideoWidget   
-from PySide6.QtCore import Slot, QUrl, Qt
+from PySide6.QtCore import Slot, QUrl, Qt, Signal
 from PySide6.QtGui import QFont, QPixmap, QPalette, QColor, QMovie
 import pandas as pd
 from random import randint
@@ -9,6 +9,12 @@ import re
 import settings
 from strings import get_string
 from loading import load_save, save_exists, filter_out, new_from_diff
+
+class ClickableVideo(QVideoWidget):
+    clicked = Signal()
+
+    def mousePressEvent(self, event):
+        self.clicked.emit()
 
 class QuestionPage(QMainWindow):
 
@@ -46,6 +52,8 @@ class QuestionPage(QMainWindow):
 
     def init_question_screen(self):
 
+        # -------------- labels ----------------------------
+
         self.question = QLabel(get_string("loading"), wordWrap=True)
         font = self.question.font()
         font.setPointSize(settings.font_size)
@@ -60,6 +68,8 @@ class QuestionPage(QMainWindow):
         self.repeats.setFont(font)
         self.learned = QLabel(get_string("learned") + str(self.initial_number - len(self.save)) + "/" + str(self.initial_number))
         self.learned.setFont(font)
+
+        # ------------------ media ------------------------
 
         self.media = QLabel("")
         self.media.setMaximumHeight(settings.max_media_height)
@@ -81,6 +91,38 @@ class QuestionPage(QMainWindow):
         self.media_player = QMediaPlayer(self)
         self.media_player.setVideoOutput(self.video)
         self.media_player.positionChanged.connect(self.position_changed)
+
+        # --------------- PJM translation videos --------------------
+
+        self.question_video = ClickableVideo()
+        self.question_video.setFixedSize(settings.media_width, int((settings.media_width * 9) /16))
+        self.question_video.clicked.connect(self.play_PJM)
+        self.question_player = QMediaPlayer(self)
+        self.question_player.setVideoOutput(self.question_video)
+        self.question_player.positionChanged.connect(self.quest_pos_changed)
+
+        self.ans_a_video = ClickableVideo()
+        self.ans_a_video.setFixedSize(settings.media_width, int((settings.media_width * 9) /16))
+        self.ans_a_video.clicked.connect(self.play_PJM_a)
+        self.ans_a_player = QMediaPlayer(self)
+        self.ans_a_player.setVideoOutput(self.ans_a_video)
+        self.ans_a_player.positionChanged.connect(self.ans_a_pos_changed)
+
+        self.ans_b_video = ClickableVideo()
+        self.ans_b_video.setFixedSize(settings.media_width, int((settings.media_width * 9) /16))
+        self.ans_b_video.clicked.connect(self.play_PJM_b)
+        self.ans_b_player = QMediaPlayer(self)
+        self.ans_b_player.setVideoOutput(self.ans_b_video)
+        self.ans_b_player.positionChanged.connect(self.ans_b_pos_changed)
+
+        self.ans_c_video = ClickableVideo()
+        self.ans_c_video.setFixedSize(settings.media_width, int((settings.media_width * 9) /16))
+        self.ans_c_video.clicked.connect(self.play_PJM_c)
+        self.ans_c_player = QMediaPlayer(self)
+        self.ans_c_player.setVideoOutput(self.ans_c_video)
+        self.ans_c_player.positionChanged.connect(self.ans_c_pos_changed)
+
+        # -------------------- buttons ------------------------
 
         self.yes_button = QPushButton(get_string("yes"))
         self.yes_button.setFont(font)
@@ -140,9 +182,12 @@ class QuestionPage(QMainWindow):
             "N": self.no_button
         }
 
+        # --------------------- layouts -------------------------
+
         self.question_layout = QVBoxLayout()
         self.question_layout.setAlignment(Qt.AlignTop)
         self.question_layout.addWidget(self.question)
+        self.question_layout.addWidget(self.question_video)
         self.question_layout.addWidget(self.media)
         self.question_layout.addLayout(self.video_container)
         self.question_layout.setContentsMargins(20, 0, 20, 0)
@@ -169,6 +214,7 @@ class QuestionPage(QMainWindow):
         self.layout.addWidget(self.separator)
         self.layout.addLayout(self.info_layout)
 
+        # ---------------------- answers layouts -----------------------
 
         self.yesno = QWidget()
         self.ynlayout = QHBoxLayout()
@@ -194,15 +240,25 @@ class QuestionPage(QMainWindow):
 
         self.abc_answers = QVBoxLayout()
         self.abc_answers.addWidget(self.answer_a)
+        self.abc_answers.addWidget(self.ans_a_video)
         self.abc_answers.addWidget(self.answer_b)
+        self.abc_answers.addWidget(self.ans_b_video)
         self.abc_answers.addWidget(self.answer_c)
+        self.abc_answers.addWidget(self.ans_c_video)
+        
+        if settings.lang == "PJM":
+            self.question.hide()
+        else:
+            self.question_video.hide()
+            self.ans_a_video.hide()
+            self.ans_b_video.hide()
+            self.ans_c_video.hide()
 
         self.abc = QWidget()
         self.abc_layout = QVBoxLayout()
         self.abc_layout.addLayout(self.abc_answers)
         self.abc_layout.addLayout(self.abc_buttons)
         self.abc.setLayout(self.abc_layout)
-
 
     def update_language(self):
         self.setWindowTitle(get_string("title"))
@@ -214,10 +270,13 @@ class QuestionPage(QMainWindow):
         self.set_question()
         self.update_learned()
         if not pd.isnull(self.current_question["Odpowiedź A"]):
-            self.answer_a.setText("A. " + self.current_question["Odpowiedź A" + settings.lang_tag])
-            self.answer_b.setText("B. " + self.current_question["Odpowiedź B" + settings.lang_tag])
-            self.answer_c.setText("C. " + self.current_question["Odpowiedź C" + settings.lang_tag])
-
+            self.set_answers()
+        if settings.lang != "PJM":
+            self.question.show()
+            self.question_video.hide()
+            self.ans_a_video.hide()
+            self.ans_b_video.hide()
+            self.ans_c_video.hide()
 
     def set_question(self):
         self.question_nr.setText(get_string("question nr") + str(int(self.current_question["Numer pytania"])))
@@ -231,7 +290,49 @@ class QuestionPage(QMainWindow):
         self.points.setText(get_string("points") + str(int(self.current_question["Liczba punktów"])))
         self.repeats.setText(get_string("repeats") + str(self.chosen["Repeats"]))
         self.question.setText(self.current_question["Pytanie" + settings.lang_tag])
+        if settings.lang == "PJM":
+            self.question.hide()
+            try:
+                self.question_player.setSource(QUrl.fromLocalFile("multimedia/PJM/"  + self.current_question["Nazwa media tłumaczenie migowe (PJM) treść pyt"]))   
+                self.question_video.resize(settings.media_width, int((settings.media_width * 9) /16)) 
+                self.question_video.show()  
+                self.question_player.play()
+                # self.question_player.pause() 
+            except:
+                self.question_video.hide() 
+                self.question.show()
 
+    def set_answers(self):
+        self.answer_a.setText("A. " + self.current_question["Odpowiedź A" + settings.lang_tag])
+        self.answer_b.setText("B. " + self.current_question["Odpowiedź B" + settings.lang_tag])
+        self.answer_c.setText("C. " + self.current_question["Odpowiedź C" + settings.lang_tag])
+        if settings.lang == "PJM":
+            try:
+                self.ans_a_player.setSource(QUrl.fromLocalFile("multimedia/PJM/"  + self.current_question["Nazwa media tłumaczenie migowe (PJM) treść odp A"]))   
+                self.ans_a_video.resize(settings.media_width, int((settings.media_width * 9) /16)) 
+                self.ans_a_video.show()  
+                self.ans_a_player.play()
+                self.ans_a_player.pause() 
+
+                self.ans_b_player.setSource(QUrl.fromLocalFile("multimedia/PJM/"  + self.current_question["Nazwa media tłumaczenie migowe (PJM) treść odp B"]))   
+                self.ans_b_video.resize(settings.media_width, int((settings.media_width * 9) /16)) 
+                self.ans_b_video.show()  
+                self.ans_b_player.play()
+                self.ans_b_player.pause() 
+
+                self.ans_c_player.setSource(QUrl.fromLocalFile("multimedia/PJM/"  + self.current_question["Nazwa media tłumaczenie migowe (PJM) treść odp C"]))   
+                self.ans_c_video.resize(settings.media_width, int((settings.media_width * 9) /16)) 
+                self.ans_c_video.show()  
+                self.ans_c_player.play()
+                self.ans_c_player.pause() 
+                
+                self.answer_a.setText("A. ")
+                self.answer_b.setText("B. ")
+                self.answer_c.setText("C. ")
+            except:
+                self.ans_a_video.hide() 
+                self.ans_b_video.hide()
+                self.ans_c_video.hide()
 
     def update_font(self):
         font = self.question.font()
@@ -258,10 +359,10 @@ class QuestionPage(QMainWindow):
 
     @Slot()
     def show_question(self):
-
         self.answerable = True
         self.question_layout.removeWidget(self.next)
         self.next.setParent(None)
+        self.scroll.verticalScrollBar().setValue(0)
 
         for key, button in self.buttons.items():
             button.setStyleSheet('')
@@ -303,9 +404,7 @@ class QuestionPage(QMainWindow):
         else:
             self.question_layout.removeWidget(self.yesno)
             self.yesno.setParent(None)
-            self.answer_a.setText("A. " + self.current_question["Odpowiedź A" + settings.lang_tag])
-            self.answer_b.setText("B. " + self.current_question["Odpowiedź B" + settings.lang_tag])
-            self.answer_c.setText("C. " + self.current_question["Odpowiedź C" + settings.lang_tag])
+            self.set_answers()
             self.question_layout.addWidget(self.abc)
 
         if not pd.isnull(self.current_question["Media"]):
@@ -353,18 +452,63 @@ class QuestionPage(QMainWindow):
         self.update_learned()
         self.show_question()
 
+    # ------------------- handling videos ---------------------
 
     @Slot()
     def play_video(self):
         self.media_player.play()
 
-
     @Slot(int)
     def position_changed(self, position):
         if self.media_player.duration() > 0 and position >= self.media_player.duration() - 1000:
             self.media_player.pause()
+            
+    @Slot()
+    def play_PJM(self):
+        if self.question_player.position() >= self.question_player.duration() - 1000:
+            self.question_player.setPosition(0)
+        self.question_player.play()
+            
+    @Slot()
+    def play_PJM_a(self):
+        if self.ans_a_player.position() >= self.ans_a_player.duration() - 1000:
+            self.ans_a_player.setPosition(0)
+        self.ans_a_player.play()
+            
+    @Slot()
+    def play_PJM_b(self):
+        if self.ans_b_player.position() >= self.ans_b_player.duration() - 1000:
+            self.ans_b_player.setPosition(0)
+        self.ans_b_player.play()
+            
+    @Slot()
+    def play_PJM_c(self):
+        if self.ans_c_player.position() >= self.ans_c_player.duration() - 1000:
+            self.ans_c_player.setPosition(0)
+        self.ans_c_player.play()
+
+    @Slot(int)
+    def quest_pos_changed(self, position):
+        if self.question_player.duration() > 0 and position >= self.question_player.duration() - 700:
+            self.question_player.pause()
+
+    @Slot(int)
+    def ans_a_pos_changed(self, position):
+        if self.ans_a_player.duration() > 0 and position >= self.ans_a_player.duration() - 700:
+            self.ans_a_player.pause()
+
+    @Slot(int)
+    def ans_b_pos_changed(self, position):
+        if self.ans_b_player.duration() > 0 and position >= self.ans_b_player.duration() - 700:
+            self.ans_b_player.pause()
+
+    @Slot(int)
+    def ans_c_pos_changed(self, position):
+        if self.ans_c_player.duration() > 0 and position >= self.ans_c_player.duration() - 700:
+            self.ans_c_player.pause()
 
 
+    # ------------------- checking answers --------------------------
 
     @Slot()
     def check(self, answer):
@@ -467,7 +611,7 @@ class SettingsScreen(QDialog):
 
 
     def detect_translations(self):
-        langs = "PL"
+        langs = "PL, PJM"
         for column in self.parent.questions:
             if "Pytanie [" in column:
                 langs += ", "

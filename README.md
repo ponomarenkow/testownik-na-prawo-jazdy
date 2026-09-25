@@ -8,7 +8,7 @@
 Program wspomagający naukę do teoretycznego egzaminu na prawo jazdy z oficjalnej bazy Ministerstwa w formie inspirowanej [Testownikiem PWr](https://github.com/TestownikiPWR/testownik-electron). Pozwala opanować wszystkie dostępne pytania dla dowolnej kategorii prawa jazdy. 
 
 > [!NOTE]
-> Program wymaga pobrania multimediów do pytań, które na obecny moment zajmują ponad 9 GB pamięci.
+> Program wymaga pobrania multimediów do pytań, które na obecny moment zajmują ponad 9 GB pamięci. Tłumaczenia na PJM to dodatkowe 10,5 GB.
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9d4eb923-aaaa-49e5-840b-3d820988c635" />
 
@@ -20,7 +20,7 @@ Najpierw zainstaluj pythona i wymagane moduły, jeśli ich nie posiadasz. Progra
 - PySide6 (6.11.1)
 - pandas (3.0.1)
 
-Sklonuj lub pobierz repozytorium. Ze [strony Ministerstwa Infrastruktury](https://www.gov.pl/web/infrastruktura/prawo-jazdy) pobierz aktualną bazę pytań, zmień nazwę pliku na `baza_pytan.xlsx` i umieść go w folderze `pytania`. Następnie pobierz wszystkie multimedia do pytań, rozpakuj je i umieść bezpośrednio w `multimedia/do_pytan`. Program możesz uruchomić z terminala, a na Windowsie także poprzez plik `run.bat` (jeśli nie działa, spróbuj zmienić komendę z `python` na `python3`). 
+Sklonuj lub pobierz repozytorium. Ze [strony Ministerstwa Infrastruktury](https://www.gov.pl/web/infrastruktura/prawo-jazdy) pobierz aktualną bazę pytań, zmień nazwę pliku na `baza_pytan.xlsx` i umieść go w folderze `pytania`. Następnie pobierz wszystkie multimedia do pytań, rozpakuj je i umieść bezpośrednio w `multimedia/do_pytan`. Jeśli chcesz korzystać z tłumaczeń na język migowy, analogicznie pobierz je i umieść w `multimedia/PJM`. Program możesz uruchomić z terminala, a na Windowsie także poprzez plik `run.bat` (jeśli nie działa, spróbuj zmienić komendę z `python` na `python3`). 
 
 ## Jak to działa
 Zasada jest bardzo prosta. W losowej kolejności wyświetlają ci się pytania dla twojej kategorii prawa jazdy, a po udzieleniu przez ciebie odpowiedzi pokazywana jest prawidłowa. Początkowo każde pytanie ma się pojawić dwa razy, ale jeśli odpowiesz źle, zostaną dodane kolejne dwa powtórzenia, żeby to pytanie lepiej ci się utrwaliło. I tak odpowiadasz, aż opanujesz wszystkie pytania. Czy to skuteczne? Powiem tyle, uczyłam się głównie z tego i zdałam za pierwszym razem ;)
@@ -29,7 +29,7 @@ Zasada jest bardzo prosta. W losowej kolejności wyświetlają ci się pytania d
 A program for learning theory for Polish driver's license exam, using the official question base from the Ministry. It's form is inspired by [PWr's Testownik](https://github.com/TestownikiPWR/testownik-electron). It allows to master all available questions for any driver's license category.
 
 > [!NOTE]
-> For the program to work, it's necessary to download multimedia for questions, which as of now take up more than 9 GB of memory.
+> For the program to work, it's necessary to download multimedia for questions, which as of now take up more than 9 GB of memory. PJM translations take up additional 10.5 GB.
 
 <sub> GenAI disclaimer: while making the program, genAI models were consulted in solving errors that internet search did not help with. Generated code fragments are no larger than the ones taken from tutorials or answers on forums. GenAI was also used for translations to Ukrainian and German. </sub>
 
@@ -39,7 +39,7 @@ First install python and necessary modules, unless you already have them. The pr
 - PySide6 (6.11.1)
 - pandas (3.0.1)
 
-Clone or download the repository. From [Ministry's of Infrastructure site](https://www.gov.pl/web/infrastruktura/prawo-jazdy) download the question base, rename the file to `baza_pytan.xlsx` and place it in the folder `pytania`. Next download all multimedia for questions, unpack them and place directly in `multimedia/do_pytan`. You may run the program from console, and on Windows also through `run.bat` (if it doesn't work, try changing the command from `python` to `python3`).
+Clone or download the repository. From [Ministry's of Infrastructure site](https://www.gov.pl/web/infrastruktura/prawo-jazdy) download the question base, rename the file to `baza_pytan.xlsx` and place it in the folder `pytania`. Next download all multimedia for questions, unpack them and place directly in `multimedia/do_pytan`. If you want to use Polish Sign Language, download the translations as well and place them in `multimedia/PJM`. You may run the program from console, and on Windows also through `run.bat` (if it doesn't work, try changing the command from `python` to `python3`).
 
 ### How does it work
 The rule is simple. THe questions from your category are shown to you in random order, and after answering the correct answer is shown. Initially every question is supposed to appear two times, but if you answer incorrectly, two additional repeats are added to help you remember this question better. And you go on until you learn all the questions. Is it effective? I'll say this, I was learning mainly from this and I passed on the first try ;)
